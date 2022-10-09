@@ -5,7 +5,7 @@ pipeline {
       stage('Build Artifact') {
             steps {
               sh "mvn clean package -DskipTests=true"
-              archive 'target/*.jar' //add comment in order to change andgenerate a webhook.....
+              archive 'target/*.jar'
             }
         }   
     }
