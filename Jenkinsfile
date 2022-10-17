@@ -9,7 +9,7 @@ pipeline {
             }
         }
 
-       stage('Unit Test - JUnit and Jacoco') {
+      stage('Unit Test - JUnit and Jacoco') {
             steps {
               sh "mvn test"
             }
@@ -17,6 +17,16 @@ pipeline {
               always {
                 junit 'target/surefire-reports/*.xml'
                 jacoco execPattern: 'target/jacoco.exec'
+              }
+            }
+        }
+      stage('Mutations test - PIT') {
+            steps {
+              sh "mvn org.pitest:pitest:maven:mutationCoverage"
+            }
+            post {
+              always {
+                pitmutation mutationStatsFile: '**/target/pit-reports/mutations.xml'
               }
             }
         } 
